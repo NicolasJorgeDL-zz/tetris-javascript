@@ -193,7 +193,7 @@ function Peca(formato, cor) {
     this.posicao = 0; // isto indica que a peca comeca na direcao padrao
     this.posicaoAtual = this.formato[this.posicao];
     this.x = 3;
-    this.y = 2;
+    this.y = -1;
 }
 
 Peca.prototype.preencher = function (cor) {
@@ -225,7 +225,8 @@ Peca.prototype.moverParaBaixo = function () {
         this.y++;
         this.desenha();
     } else {
-        //travar a peça e gerar uma nova
+        this.travar();
+        p = pecaAleatoria();
     }
 }
 
@@ -235,7 +236,7 @@ Peca.prototype.moverParaDireita = function () {
         this.apaga();
         this.x++;
         this.desenha();
-    } else { }
+    }
 }
 
 // funçao que move a peca para esquerda
@@ -244,7 +245,7 @@ Peca.prototype.moverParaEsquerda = function () {
         this.apaga();
         this.x--;
         this.desenha();
-    } else { }
+    }
 }
 
 // funçao que realiza a rotacao da peca 
@@ -266,8 +267,47 @@ Peca.prototype.rodar = function () {
         this.posicao = (this.posicao + 1) % this.formato.length;
         this.posicaoAtual = proximaPosicao;
         this.desenha()
-    } else { }
+    }
 }
+
+let pontos = 0;
+
+Peca.prototype.travar = function () {
+    for (l = 0; l < this.posicaoAtual.length; l++) {
+        for (c = 0; c < this.posicaoAtual.length; c++) {
+            //não travar os espaços vazios pulando eles
+            if (!this.posicaoAtual[l][c]) {
+                continue;
+            }
+            if (this.y + l < 0) {
+                alert("Game Over");
+                gameOver = true;
+                break;
+            }
+            campo[this.y + l][this.x + c] = this.cor;
+        }
+    }
+    //remover linhas feitas
+    for (l = 0; l < LINHAS; l++) {
+        let linhaCheia = true;
+        for (c = 0; c < COLUNAS; c++) {
+            linhaCheia = linhaCheia && (campo[l][c] != COR_VAZIA);
+        }
+        if (linhaCheia) {
+            for (y = l; y > 1; y--) {
+                for (c = 0; c < COLUNAS; c++) {
+                    campo[y][c] = campo[y - 1][c];
+                }
+            }
+            for (c = 0; c < COLUNAS; c++) {
+                campo[0][c] = campo[y - 1][c];
+            }
+            pontos += 10;
+        }
+    }
+    desenhaCampo();
+}
+
 
 // Funções de colisões 
 Peca.prototype.colisao = function (x, y, peca) {
@@ -314,10 +354,15 @@ function CONTROLE(event) {
     }
 }
 
+function pecaAleatoria() {
+    let r = randomN = Math.floor(Math.random() * PECAS.length);
+    return new Peca(PECAS[r][0], PECAS[r][1])
+}
 
-let p = new Peca(PECAS[0][0], PECAS[0][1])
+let p = pecaAleatoria();
 
 let tempoInicial = Date.now();
+let gameOver = false;
 function cair() {
     let tempoAtual = Date.now();
     let delta = tempoAtual - tempoInicial;
@@ -326,7 +371,9 @@ function cair() {
         p.moverParaBaixo();
         tempoInicial = Date.now();
     }
-    requestAnimationFrame(cair);
+    if (!gameOver) {
+        requestAnimationFrame(cair);
+    }
 }
 
 /* 
