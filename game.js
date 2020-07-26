@@ -220,32 +220,70 @@ Peca.prototype.apaga = function () {
 
 // funçao que move a peca para baixo
 Peca.prototype.moverParaBaixo = function () {
-    this.apaga();
-    this.y++;
-    this.desenha();
+    if (!this.Colisao(0, 1, this.posicaoAtual)) {
+        this.apaga();
+        this.y++;
+        this.desenha();
+    } else {
+        //travar a peça e gerar uma nova
+    }
 }
 
 // funçao que move a peca para direita
 Peca.prototype.moverParaDireita = function () {
-    this.apaga();
-    this.x++;
-    this.desenha();
+    if (!this.Colisao(1, 0, this.posicaoAtual)) {
+        this.apaga();
+        this.x++;
+        this.desenha();
+    } else { }
 }
 
 // funçao que move a peca para esquerda
 Peca.prototype.moverParaEsquerda = function () {
-    this.apaga();
-    this.x--;
-    this.desenha();
+    if (!this.Colisao(-1, 0, this.posicaoAtual)) {
+        this.apaga();
+        this.x--;
+        this.desenha();
+    } else { }
 }
 
 // funçao que realiza a rotacao da peca 
 Peca.prototype.rodar = function () {
-    this.apaga();
-    this.posicao = (this.posicao + 1) % this.formato.length;
-    this.posicaoAtual = this.formato[this.posicao];
-    this.desenha();
+    let proximaPosicao = this.formato[(this.posicao + 1) % this.formato.length];
+    if (!this.Colisao(0, 0, proximaPosicao)) {
+        this.apaga();
+        this.posicao = (this.posicao + 1) % this.formato.length;
+        this.posicaoAtual = proximaPosicao;
+        this.desenha()
+    } else { }
 }
+
+// Funções de colisões 
+Peca.prototype.Colisao = function (x, y, peca) {
+    for (l = 0; l < peca.length; l++) {
+        for (c = 0; c < peca.length; c++) {
+            // se for vazia pula 
+            if (!peca[l][c]) {
+                continue;
+            }
+            //a peca depois de movida
+            let novoX = this.x + c + x;
+            let novoY = this.y + l + y;
+
+            if (novoX < 0 || novoX >= COLUNAS || novoY >= LINHAS) {
+                return true;
+            }
+            if (novoY < 0) {
+                continue;
+            }
+            if (campo[novoY][novoX] != COR_VAZIA) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 
 // Controle da movimentacao da da peca 
 document.addEventListener("keydown", CONTROLE);
