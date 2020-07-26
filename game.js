@@ -2,6 +2,9 @@
 var canvas = document.getElementById("tetris");
 // Pegando o Contexto do Canvas para manipulação
 var ctx = canvas.getContext("2d");
+
+var pontuacaoElemento = document.getElementById("pontuacao");
+
 // Constante do tamanho de um quadrado do jogo
 const TQ = 20;
 // propriedades do jogo,Numero de linhas, colunas, cor de fundo
@@ -306,6 +309,8 @@ Peca.prototype.travar = function () {
         }
     }
     desenhaCampo();
+
+    pontuacaoElemento.innerHTML = pontos;
 }
 
 
