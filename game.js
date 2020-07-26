@@ -220,7 +220,7 @@ Peca.prototype.apaga = function () {
 
 // funçao que move a peca para baixo
 Peca.prototype.moverParaBaixo = function () {
-    if (!this.Colisao(0, 1, this.posicaoAtual)) {
+    if (!this.colisao(0, 1, this.posicaoAtual)) {
         this.apaga();
         this.y++;
         this.desenha();
@@ -231,7 +231,7 @@ Peca.prototype.moverParaBaixo = function () {
 
 // funçao que move a peca para direita
 Peca.prototype.moverParaDireita = function () {
-    if (!this.Colisao(1, 0, this.posicaoAtual)) {
+    if (!this.colisao(1, 0, this.posicaoAtual)) {
         this.apaga();
         this.x++;
         this.desenha();
@@ -240,7 +240,7 @@ Peca.prototype.moverParaDireita = function () {
 
 // funçao que move a peca para esquerda
 Peca.prototype.moverParaEsquerda = function () {
-    if (!this.Colisao(-1, 0, this.posicaoAtual)) {
+    if (!this.colisao(-1, 0, this.posicaoAtual)) {
         this.apaga();
         this.x--;
         this.desenha();
@@ -250,8 +250,19 @@ Peca.prototype.moverParaEsquerda = function () {
 // funçao que realiza a rotacao da peca 
 Peca.prototype.rodar = function () {
     let proximaPosicao = this.formato[(this.posicao + 1) % this.formato.length];
-    if (!this.Colisao(0, 0, proximaPosicao)) {
+    let chutar = 0;
+
+    if (this.colisao(0, 0, proximaPosicao)) {
+        if (this.x > COLUNAS / 2) {
+            chutar = -1;
+        } else {
+            chutar = 1;
+        }
+    }
+
+    if (!this.colisao(chutar, 0, proximaPosicao)) {
         this.apaga();
+        this.x += chutar;
         this.posicao = (this.posicao + 1) % this.formato.length;
         this.posicaoAtual = proximaPosicao;
         this.desenha()
@@ -259,7 +270,7 @@ Peca.prototype.rodar = function () {
 }
 
 // Funções de colisões 
-Peca.prototype.Colisao = function (x, y, peca) {
+Peca.prototype.colisao = function (x, y, peca) {
     for (l = 0; l < peca.length; l++) {
         for (c = 0; c < peca.length; c++) {
             // se for vazia pula 
