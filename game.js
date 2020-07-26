@@ -209,12 +209,12 @@ Peca.prototype.preencher = function (cor) {
 
 // Funcao que desenha a peca na tela
 Peca.prototype.desenha = function () {
-    Peca.preencher(this.cor);
+    this.preencher(this.cor);
 }
 
 //funcao que apaga a peca na tela
 Peca.prototype.apaga = function () {
-    Peca.preencher(COR_VAZIA);
+    this.preencher(COR_VAZIA);
 }
 
 
@@ -223,6 +223,46 @@ Peca.prototype.moverParaBaixo = function () {
     this.apaga();
     this.y++;
     this.desenha();
+}
+
+// funçao que move a peca para direita
+Peca.prototype.moverParaDireita = function () {
+    this.apaga();
+    this.x++;
+    this.desenha();
+}
+
+// funçao que move a peca para esquerda
+Peca.prototype.moverParaEsquerda = function () {
+    this.apaga();
+    this.x--;
+    this.desenha();
+}
+
+// funçao que realiza a rotacao da peca 
+Peca.prototype.rodar = function () {
+    this.apaga();
+    this.posicao = (this.posicao + 1) % this.formato.length;
+    this.posicaoAtual = this.formato[this.posicao];
+    this.desenha();
+}
+
+// Controle da movimentacao da da peca 
+document.addEventListener("keydown", CONTROLE);
+
+function CONTROLE(event) {
+    if (event.keyCode == 37) {
+        p.moverParaEsquerda();
+        tempoInicial = Date.now();
+    } else if (event.keyCode == 38) {
+        p.rodar();
+        tempoInicial = Date.now();
+    } else if (event.keyCode == 39) {
+        p.moverParaDireita();
+        tempoInicial = Date.now();
+    } else if (event.keyCode == 40) {
+        p.moverParaBaixo();
+    }
 }
 
 
