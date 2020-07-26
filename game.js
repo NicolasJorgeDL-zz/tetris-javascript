@@ -195,26 +195,26 @@ function Peca(formato, cor) {
     this.x = 3;
     this.y = 2;
 }
-// Funcao que desenha a peca na tela
-Peca.prototype.desenha = function () {
+
+Peca.prototype.preencher = function (cor) {
     for (l = 0; l < this.posicaoAtual.length; l++) {
         for (c = 0; c < this.posicaoAtual.length; c++) {
             if (this.posicaoAtual[l][c]) {
-                desenhaQuadrado(this.x + c, this.y + l, this.cor);
+                desenhaQuadrado(this.x + c, this.y + l, cor);
             }
         }
     }
 }
 
+
+// Funcao que desenha a peca na tela
+Peca.prototype.desenha = function () {
+    Peca.preencher(this.cor);
+}
+
 //funcao que apaga a peca na tela
 Peca.prototype.apaga = function () {
-    for (l = 0; l < this.posicaoAtual.length; l++) {
-        for (c = 0; c < this.posicaoAtual.length; c++) {
-            if (this.posicaoAtual[l][c]) {
-                desenhaQuadrado(this.x + c, this.y + l, COR_VAZIA);
-            }
-        }
-    }
+    Peca.preencher(COR_VAZIA);
 }
 
 
