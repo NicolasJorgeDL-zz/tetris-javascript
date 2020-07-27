@@ -26,7 +26,7 @@
     font-weight:bold;
 }
 
-#pontuacao {
+#pontuacao,#tempo {
     display: inline-block;
     justify-content: center;
     align-items: center;

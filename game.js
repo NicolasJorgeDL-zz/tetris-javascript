@@ -7,6 +7,8 @@ var ctx = canvas.getContext("2d");
 
 var pontuacaoElemento = document.getElementById("pontuacao");
 
+var tempoElemento = document.getElementById("tempo");
+
 // Constante do tamanho de um quadrado do jogo
 const TQ = 20;
 // propriedades do jogo,Numero de linhas, colunas, cor de fundo
@@ -392,12 +394,16 @@ let proximaPeca = pecaAleatoria();
 
 let tempoInicial = Date.now();
 let gameOver = false;
+let tempoDoJogo = 0;
+
 function cair() {
     let tempoAtual = Date.now();
     let delta = tempoAtual - tempoInicial;
 
     if (delta > 1000) {
         p.moverParaBaixo();
+        tempoDoJogo++;
+        tempoElemento.innerHTML = tempoDoJogo;
         tempoInicial = Date.now();
     }
     if (!gameOver) {
