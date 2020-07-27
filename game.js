@@ -1,6 +1,8 @@
 // Pegando o elemento Canvas
 var canvas = document.getElementById("tetris");
+var proxCanvas = document.getElementById("proximaPeca");
 // Pegando o Contexto do Canvas para manipulação
+var proxCtx = proxCanvas.getContext("2d");
 var ctx = canvas.getContext("2d");
 
 var pontuacaoElemento = document.getElementById("pontuacao");
@@ -209,16 +211,35 @@ Peca.prototype.preencher = function (cor) {
     }
 }
 
+Peca.prototype.preencherProx = function (cor) {
+    for (l = 0; l < this.posicaoAtual.length; l++) {
+        for (c = 0; c < this.posicaoAtual.length; c++) {
+            if (this.posicaoAtual[l][c]) {
+                desenhaProximoQuadrado(1 + c, 1 + l, cor);
+            }
+        }
+    }
+}
+
 
 // Funcao que desenha a peca na tela
 Peca.prototype.desenha = function () {
     this.preencher(this.cor);
 }
 
+Peca.prototype.desenhaProx = function () {
+    this.preencherProx(this.cor);
+}
+
 //funcao que apaga a peca na tela
 Peca.prototype.apaga = function () {
     this.preencher(COR_VAZIA);
 }
+
+Peca.prototype.apagaProx = function () {
+    this.preencherProx(COR_VAZIA);
+}
+
 
 
 // funçao que move a peca para baixo
@@ -229,7 +250,10 @@ Peca.prototype.moverParaBaixo = function () {
         this.desenha();
     } else {
         this.travar();
-        p = pecaAleatoria();
+        p = proximaPeca;
+        proximaPeca.apagaProx();
+        proximaPeca = new pecaAleatoria();
+        proximaPeca.desenhaProx();
     }
 }
 
@@ -347,13 +371,12 @@ document.addEventListener("keydown", CONTROLE);
 function CONTROLE(event) {
     if (event.keyCode == 37) {
         p.moverParaEsquerda();
-        tempoInicial = Date.now();
     } else if (event.keyCode == 38) {
         p.rodar();
-        tempoInicial = Date.now();
+
     } else if (event.keyCode == 39) {
         p.moverParaDireita();
-        tempoInicial = Date.now();
+
     } else if (event.keyCode == 40) {
         p.moverParaBaixo();
     }
@@ -365,6 +388,7 @@ function pecaAleatoria() {
 }
 
 let p = pecaAleatoria();
+let proximaPeca = pecaAleatoria();
 
 let tempoInicial = Date.now();
 let gameOver = false;
@@ -396,6 +420,14 @@ function iniciaCampo() {
     return campoVazio;
 }
 
+function iniciaProx() {
+    for (var l = 0; l < 5; l++) {
+        for (var c = 0; c < 5; c++)
+            desenhaProximoQuadrado(c, l, campo[l][c]);
+    }
+}
+
+
 /*
     Descrição: Percorre o Campo Desenhano nele a respectiva cor
     Utilidade: Atualizar o campo na tela
@@ -418,6 +450,15 @@ function desenhaQuadrado(x, y, cor) {
     ctx.strokeRect(x * TQ, y * TQ, TQ, TQ);
 }
 
+function desenhaProximoQuadrado(x, y, cor) {
+    proxCtx.fillStyle = cor;
+    proxCtx.fillRect(x * TQ, y * TQ, TQ, TQ);
+    proxCtx.strokeStyle = "black";
+    proxCtx.strokeRect(x * TQ, y * TQ, TQ, TQ);
+}
+
+iniciaProx();
 desenhaCampo();
 p.desenha();
+proximaPeca.desenhaProx();
 cair();
