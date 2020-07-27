@@ -14,7 +14,7 @@ const TQ = 20;
 // propriedades do jogo,Numero de linhas, colunas, cor de fundo
 const COLUNAS = 10;
 const LINHAS = 20;
-const COR_VAZIA = "gray";
+const COR_VAZIA = "#0E0B16";
 
 //Variavel que controla o Campo guardando as posições de todas as peças
 let campo = iniciaCampo();
@@ -452,14 +452,14 @@ function desenhaCampo() {
 function desenhaQuadrado(x, y, cor) {
     ctx.fillStyle = cor;
     ctx.fillRect(x * TQ, y * TQ, TQ, TQ);
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "#4717F6";
     ctx.strokeRect(x * TQ, y * TQ, TQ, TQ);
 }
 
 function desenhaProximoQuadrado(x, y, cor) {
     proxCtx.fillStyle = cor;
     proxCtx.fillRect(x * TQ, y * TQ, TQ, TQ);
-    proxCtx.strokeStyle = "black";
+    proxCtx.strokeStyle = "#4717F6";
     proxCtx.strokeRect(x * TQ, y * TQ, TQ, TQ);
 }
 
