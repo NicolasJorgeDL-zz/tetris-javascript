@@ -182,13 +182,13 @@ const FORMATO_O = [[
 
 //Constante que tem todos os formatos possiveis das peças do jogo
 const PECAS = [
-    [FORMATO_Z, "blue"],
+    [FORMATO_Z, "red"],
     [FORMATO_S, "green"],
-    [FORMATO_J, "red"],
-    [FORMATO_L, "yellow"],
+    [FORMATO_J, "blue"],
+    [FORMATO_L, "orange"],
     [FORMATO_T, "purple"],
-    [FORMATO_I, "pink"],
-    [FORMATO_O, "orange"],
+    [FORMATO_I, "lightblue"],
+    [FORMATO_O, "yellow"],
 ];
 
 
