@@ -463,8 +463,26 @@ function desenhaProximoQuadrado(x, y, cor) {
     proxCtx.strokeRect(x * TQ, y * TQ, TQ, TQ);
 }
 
-iniciaProx();
-desenhaCampo();
-p.desenha();
-proximaPeca.desenhaProx();
-cair();
+function reStart() {
+    campo = iniciaCampo();
+    p = pecaAleatoria();
+    proximaPeca = pecaAleatoria();
+    iniciaProx();
+    tempoDoJogo = 0;
+    pontos = 0;
+    gameOver = false;
+    pontuacaoElemento.innerHTML = pontos;
+    tempoElemento.innerHTML = tempoDoJogo;
+    start();
+}
+
+
+function start() {
+    iniciaProx();
+    desenhaCampo();
+    p.desenha();
+    proximaPeca.desenhaProx();
+    cair();
+}
+
+start();
