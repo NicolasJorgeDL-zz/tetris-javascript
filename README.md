@@ -18,10 +18,10 @@
     Sou ainda um Dev iniciante portanto deve ter inumeras maneiras de fazer o jogo de forma mais perfomatica e eficiente. Mas esse material pode ser util para outros iniciantes que querem ver uma outra forma de fazer o jogo. 👍
 
 ## Situação do Projeto
-    [ x ] Jogo rodando
-    [ x ] Botão de Recomeçar
-    [ x ] Pontuação e Tempo do jogo
-    [ ] Tutorial descrito no README
+   - [x] Jogo rodando
+   - [x] Botão de Recomeçar
+   - [x] Pontuação e Tempo do jogo
+   - [ ] Tutorial descrito no README
 
 ## instalação
 ### Pré-requisitos
