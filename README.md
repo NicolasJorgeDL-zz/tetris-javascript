@@ -17,6 +17,10 @@
 Eu estava aprendendo mais sobre javascript e acabei me deparando com varios videos e tutoriais que mostravam como fazer o Jogo Tetris utilizando Javascript, então decidi fazer um para treinar e quem sabe aprimorar meus conhecimentos. Este projeto tem como a finalidade de mostrar como fazer Tetris utilizando apenas javascript,HTML e css.
 Sou ainda um Dev iniciante portanto deve ter inumeras maneiras de fazer o jogo de forma mais perfomatica e eficiente. Mas esse material pode ser util para outros iniciantes que querem ver uma outra forma de fazer o jogo. 👍
 
+ <p align="center"> 
+    <img src="https://user-images.githubusercontent.com/51519278/124070029-92610e00-da13-11eb-9896-2700818216d2.jpg" alt="o jogo">
+</p>
+
 ## Situação do Projeto
    - [x] Jogo rodando
    - [x] Botão de Recomeçar
